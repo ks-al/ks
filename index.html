@@ -2,64 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <title>Temperature Converter</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <h1>Temperature Converter</h1>
 
-  <!-- Header / Your Name -->
-  <header>
-    <h1>KOTTAPALLI SURYA GOUTAMI</h1> <!-- 🔁 Replace this -->
-    <p>Web Developer | Intern at OIBSIP</p>
-  </header>
+    <label for="temperature"><b>Enter Temperature:</b></label>
+    <input type="number" id="temperature" placeholder="e.g. 100">
 
-  <!-- About Me Section -->
-  <section id="about">
-    <h2>About Me</h2>
-    <img src="images/WhatsApp Image 2025-06-12 at 16.55.54_11035f87.jpg"alt="Profile Picture"width="200"height="200"style="border-radius: 50%align-iteams:center:">
-        <p>I am a student currently learning web development. I recently created a landing page as part of my internship (Task 1), and now this is my portfolio website (Task 2).</p>
-  </section>
+    <br><br>
 
-  <!-- Skills Section -->
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul>
-        <li>python</li>      
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>Data Analysis(beginnre)</li>      
-        <li>MS Excel</li>
-        <li>communication skills</li>
-        <li>Teamwork</li>
-        <li>Problem Solving</li>
-        <li>Time Management</li>
-       <li>willingness to learn</li> 
+    <label for="unit"><u><b style="font-size:18px;">Select Unit:</b></u></label>
+    <select id="unit">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
 
-    </ul>
-  </section>
+    <br><br>
 
-  <!-- Projects Section -->
-  <section id="projects">
-    <h2>Projects</h2>
+    <button onclick="convertTemperature()">Convert</button>
 
-    <div class="project">
-      <h3>Landing Page (Task 1)</h3>
-      <p>This is the landing page I created in Task 1 using HTML and CSS.</p>
-      <img src="images/Screenshot 2025-06-12 162720.png" alt="Landing Page Screenshot" width="300">
-    </div>
+    <div id="result"></div>
+  </div>
 
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email:"ksgoutami56@gamil.com"</p> <!-- 🔁 Replace this -->
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025KOTTAPALLI SURYA GOUTAMI</p> <!-- 🔁 Replace this -->
-  </footer>
-
+  <script src="script.js"></script>
 </body>
 </html>
