@@ -1,163 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login Authentication System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-container {
-            background: #fff;
-            padding: 2rem 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 320px;
-        }
-        .login-container h2 {
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .login-container label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 0.7rem;
-            background: #0078d7;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .login-container .error {
-            color: #d8000c;
-            background: #ffd2d2;
-            padding: 0.5rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-    </style>
+    <title>Pizza Delivery App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <div class="login-container" id="loginContainer">
-    <h2>Login</h2>
-    <div class="error" id="errorMsg"></div>
-    <form id="loginForm" autocomplete="off">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+    <div class="container">
+        <h1>🍕 Pizza Delivery App</h1>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name"><br>
 
-        <button type="submit">Login</button>
-    </form>
-    <button id="showRegisterBtn" style="margin-top:10px;width:100%;">New user? Register</button>
-</div>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address"><br>
 
-<div class="login-container" id="registerContainer" style="display:none;">
-    <h2>Register</h2>
-    <div class="error" id="registerErrorMsg"></div>
-    <form id="registerForm" autocomplete="off">
-        <label for="newUsername">Username</label>
-        <input type="text" id="newUsername" name="newUsername" required>
+        <label>Pizza Size:</label><br>
+        <input type="radio" name="size" value="Small" id="size-small"> <label for="size-small">Small ₹150</label><br>
+        <input type="radio" name="size" value="Medium" id="size-medium"> <label for="size-medium">Medium ₹250</label><br>
+        <input type="radio" name="size" value="Large" id="size-large"> <label for="size-large">Large ₹350</label><br>
 
-        <label for="newPassword">Password</label>
-        <input type="password" id="newPassword" name="newPassword" required>
+        <label>Toppings:</label><br>
+        <input type="checkbox" value="Cheese" id="topping-cheese"> <label for="topping-cheese">Cheese (+₹50)</label><br>
+        <input type="checkbox" value="Mushroom" id="topping-mushroom"> <label for="topping-mushroom">Mushroom (+₹30)</label><br>
+        <input type="checkbox" value="Chicken" id="topping-chicken"> <label for="topping-chicken">Chicken (+₹80)</label><br><br>
 
-        <button type="submit">Register</button>
-    </form>
-    <button id="showLoginBtn" style="margin-top:10px;width:100%;">Back to Login</button>
-</div>
-    <script>
-        // Helper functions for localStorage user management
-        function getUsers() {
-            const users = localStorage.getItem('users');
-            // Remove duplicate usernames, keep the first occurrence
-            let userArr = users ? JSON.parse(users) : [{username: "admin", password: "password123"}];
-            const seen = new Set();
-            userArr = userArr.filter(u => {
-                if (seen.has(u.username)) return false;
-                seen.add(u.username);
-                return true;
-            });
-            // Save deduplicated users back to storage if needed
-            saveUsers(userArr);
-            return userArr;
-        }
-        function saveUsers(users) {
-            localStorage.setItem('users', JSON.stringify(users));
-        }
+        <button onclick="placeOrder()">Place Order</button>
 
-        // Show/hide containers
-        document.getElementById('showRegisterBtn').onclick = function() {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('registerContainer').style.display = 'block';
-            document.getElementById('errorMsg').style.display = 'none';
-        };
-        document.getElementById('showLoginBtn').onclick = function() {
-            document.getElementById('registerContainer').style.display = 'none';
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('registerErrorMsg').style.display = 'none';
-        };
+        <div id="output"></div>
+    </div>
 
-        // Login logic
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const users = getUsers();
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                alert('Login successful!');
-                // Redirect or load dashboard here
-            } else {
-                const errorMsg = document.getElementById('errorMsg');
-                errorMsg.textContent = "Invalid username or password.";
-                errorMsg.style.display = "block";
-            }
-        });
-
-        // Register logic
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const newUsername = document.getElementById('newUsername').value.trim();
-            const newPassword = document.getElementById('newPassword').value;
-            let users = getUsers();
-
-            if (users.some(u => u.username === newUsername)) {
-                const errorMsg = document.getElementById('registerErrorMsg');
-                errorMsg.textContent = "Username already exists.";
-                errorMsg.style.display = "block";
-                return;
-            }
-
-            users.push({username: newUsername, password: newPassword});
-            saveUsers(users);
-
-            alert('Registration successful! You can now log in.');
-            document.getElementById('registerForm').reset();
-            document.getElementById('showLoginBtn').click();
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
