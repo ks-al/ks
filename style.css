@@ -1,45 +1,58 @@
 body {
+  background-color: #f0f2f5;
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
 .container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  text-align: center;
 }
 
-input, select, button {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#display {
+  width: 250px;
+  height: 50px;
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: right;
+  padding-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  grid-template-rows: repeat(5, 60px);
+  gap: 10px;
 }
 
 button {
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
   background-color: #007bff;
   color: white;
-  border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
-}
+/* Make 0 button double width */
+button[style*="grid-column"] {
+  grid-column: span 2
