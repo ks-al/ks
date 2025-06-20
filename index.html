@@ -3,38 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Calculator</title>
+  <title>Tribute to Dr. A.P.J. Abdul Kalam</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="calculator">
-      <input type="text" id="display" disabled />
-      <div class="buttons">
-        <button onclick="clearDisplay()">C</button>
-        <button onclick="appendValue('/')">/</button>
-        <button onclick="appendValue('*')">*</button>
-        <button onclick="appendValue('-')">-</button>
+    <h1>Dr. A.P.J. Abdul Kalam</h1>
+    <p class="subtitle">“Missile Man of India”</p>
+    
+    <img src="Screenshot 2025-06-19 203443.png" alt="Dr. Abdul Kalam" class="main-image"/>
 
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('+')">+</button>
+    <section class="bio">
+      <h2>About</h2>
+      <p>Dr. A.P.J. Abdul Kalam was an Indian aerospace scientist and the 11th President of India from 2002 to 2007. He is remembered for his pivotal role in India’s missile and nuclear weapons programs, and for being an inspiring teacher, visionary, and humble leader.</p>
+    </section>
 
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="calculateResult()">=</button>
+    <section class="achievements">
+      <h2>Achievements</h2>
+      <ul>
+        <li>Known as the “Missile Man of India”.</li>
+        <li>Played a leading role in India’s 1998 nuclear tests.</li>
+        <li>11th President of India (2002–2007).</li>
+        <li>Awarded Bharat Ratna in 1997.</li>
+        <li>Authored inspirational books like "Wings of Fire".</li>
+        <li>Died while delivering a lecture – a true teacher till the end.</li>
+      </ul>
+    </section>
 
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="appendValue('.')">.</button>
-
-        <button onclick="appendValue('0')" style="grid-column: span 2">0</button>
-      </div>
-    </div>
+    <footer>
+      <p>Created by Gothalu 💙</p>
+    </footer>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
