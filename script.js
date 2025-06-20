@@ -1,89 +1,54 @@
-function updateDropdown() {
-  const dropdown = document.getElementById('task-dropdown');
-  const pendingList = document.getElementById('pending-list');
-  dropdown.innerHTML = '';
-  Array.from(pendingList.children).forEach((li, idx) => {
-    const option = document.createElement('option');
-    option.value = idx;
-    // Use only the span's text for the option
-    const span = li.querySelector('span');
-    option.text = span ? span.textContent.trim() : li.textContent.replace('Delete', '').trim();
-    dropdown.appendChild(option);
-  });
-}
+// Load users from localStorage or start with an empty array
+let users = JSON.parse(localStorage.getItem('users')) || [];
 
-function createTaskElement(taskText) {
-  const li = document.createElement('li');
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.addEventListener('change', function() {
-    if (checkbox.checked) {
-      li.style.textDecoration = 'line-through';
-    } else {
-      li.style.textDecoration = '';
+// Register a new user
+function register(username, password) {
+    if (users.find(u => u.username === username)) {
+        alert('Username already exists!');
+        return false;
     }
-  });
-
-  const span = document.createElement('span');
-  span.textContent = taskText;
-
-  const delBtn = document.createElement('button');
-  delBtn.textContent = 'Delete';
-  delBtn.addEventListener('click', function() {
-    li.remove();
-    updateDropdown();
-  });
-
-  li.appendChild(checkbox);
-  li.appendChild(span);
-  li.appendChild(delBtn);
-  return li;
+    users.push({ username, password });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Registration successful!');
+    return true;
 }
 
-document.getElementById('add-btn').addEventListener('click', function() {
-  const taskInput = document.getElementById('task');
-  const taskText = taskInput.value.trim();
-  if (taskText !== '') {
-    const li = document.createElement('li');
-    li.style.display = 'flex';
-    li.style.alignItems = 'center';
-    li.style.justifyContent = 'space-between';
+// Login authentication
+function login(username, password) {
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+        alert('Login successful!');
+        // You can set session info here
+        return true;
+    } else {
+        alert('Invalid credentials!');
+        return false;
+    }
+}
 
-    // Task text
-    const span = document.createElement('span');
-    span.textContent = taskText;
+// Attach event listeners to the login and register buttons
+document.getElementById('registerBtn').onclick = function() {
+    const username = document.getElementById('newUsername').value;
+    const password = document.getElementById('newPassword').value;
+    register(username, password);
+};
 
-    // Delete button with cross emoji
-    const delBtn = document.createElement('button');
-    delBtn.textContent = '❌';
-    delBtn.style.background = 'none';
-    delBtn.style.border = 'none';
-    delBtn.style.fontSize = '1.2em';
-    delBtn.style.cursor = 'pointer';
-    delBtn.style.marginLeft = '12px';
-    delBtn.setAttribute('aria-label', 'Delete task');
+document.getElementById('loginBtn').onclick = function() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    login(username, password);
+};
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
 
-    delBtn.addEventListener('click', function() {
-      li.remove();
-    });
-
-    li.appendChild(span);
-    li.appendChild(delBtn);
-
-    document.getElementById('pending-list').appendChild(li);
-    taskInput.value = '';
-  }
-});
-
-document.getElementById('delete-btn').addEventListener('click', function() {
-  const dropdown = document.getElementById('task-dropdown');
-  const idx = dropdown.value;
-  const pendingList = document.getElementById('pending-list');
-  if (pendingList.children[idx]) {
-    pendingList.children[idx].remove();
-    updateDropdown();
-  }
-});
-
-// Initialize dropdown on page load
-updateDropdown();
+            if (username === USERNAME && password === PASSWORD) {
+                alert('Login successful!');
+                // Redirect or load dashboard here
+            } else {
+                const errorMsg = document.getElementById('errorMsg');
+                errorMsg.textContent = "Invalid username or password.";
+                errorMsg.style.display = "block";
+            }
+        });

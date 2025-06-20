@@ -1,59 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>To-Do App</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      background: url("Screenshot 2025-06-20 063034.png") no-repeat center center fixed;
-      background-size: 100vw 100vh;
-      background-size: cover;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Login Authentication System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 0.7rem;
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .login-container .error {
+            color: #d8000c;
+            background: #ffd2d2;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <h1>To-Do List</h1>
-    <section class="task-input-section">
-      <input type="text" id="task" placeholder="Enter a new task" aria-label="Task">
-      <div id="options-container"></div>
-      <div class="button-group">
-        <button id="add-btn" type="button">Add Task <span aria-hidden="true">📝</span></button>
-        <button id="show-options-btn" type="button">More Options <span aria-hidden="true">✨</span></button>
-      </div>
-    </section>
-    <section>
-      <ul id="pending-list" aria-label="Pending Tasks"></ul>
-    </section>
-  </main>
-  <script>
-    // Modern JS for dynamic extra options
-    const optionsContainer = document.getElementById('options-container');
-    const showOptionsBtn = document.getElementById('show-options-btn');
+   <div class="login-container" id="loginContainer">
+    <h2>Login</h2>
+    <div class="error" id="errorMsg"></div>
+    <form id="loginForm" autocomplete="off">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
 
-    showOptionsBtn.addEventListener('click', () => {
-      const optionDiv = document.createElement('div');
-      optionDiv.className = 'extra-options';
-      optionDiv.style.marginBottom = '8px';
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
 
-      const scheduleInput = document.createElement('input');
-      scheduleInput.type = 'datetime-local';
-      scheduleInput.placeholder = 'Schedule';
-      scheduleInput.setAttribute('aria-label', 'Schedule');
-      scheduleInput.style.marginRight = '8px';
+        <button type="submit">Login</button>
+    </form>
+    <button id="showRegisterBtn" style="margin-top:10px;width:100%;">New user? Register</button>
+</div>
 
-      const placeInput = document.createElement('input');
-      placeInput.type = 'text';
-      placeInput.placeholder = 'Place';
-      placeInput.setAttribute('aria-label', 'Place');
+<div class="login-container" id="registerContainer" style="display:none;">
+    <h2>Register</h2>
+    <div class="error" id="registerErrorMsg"></div>
+    <form id="registerForm" autocomplete="off">
+        <label for="newUsername">Username</label>
+        <input type="text" id="newUsername" name="newUsername" required>
 
-      optionDiv.appendChild(scheduleInput);
-      optionDiv.appendChild(placeInput);
+        <label for="newPassword">Password</label>
+        <input type="password" id="newPassword" name="newPassword" required>
 
-      optionsContainer.appendChild(optionDiv);
-    });
-  </script>
-  <script src="script.js"></script>
+        <button type="submit">Register</button>
+    </form>
+    <button id="showLoginBtn" style="margin-top:10px;width:100%;">Back to Login</button>
+</div>
+    <script>
+        // Helper functions for localStorage user management
+        function getUsers() {
+            const users = localStorage.getItem('users');
+            // Remove duplicate usernames, keep the first occurrence
+            let userArr = users ? JSON.parse(users) : [{username: "admin", password: "password123"}];
+            const seen = new Set();
+            userArr = userArr.filter(u => {
+                if (seen.has(u.username)) return false;
+                seen.add(u.username);
+                return true;
+            });
+            // Save deduplicated users back to storage if needed
+            saveUsers(userArr);
+            return userArr;
+        }
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // Show/hide containers
+        document.getElementById('showRegisterBtn').onclick = function() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+            document.getElementById('errorMsg').style.display = 'none';
+        };
+        document.getElementById('showLoginBtn').onclick = function() {
+            document.getElementById('registerContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('registerErrorMsg').style.display = 'none';
+        };
+
+        // Login logic
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const users = getUsers();
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                alert('Login successful!');
+                // Redirect or load dashboard here
+            } else {
+                const errorMsg = document.getElementById('errorMsg');
+                errorMsg.textContent = "Invalid username or password.";
+                errorMsg.style.display = "block";
+            }
+        });
+
+        // Register logic
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newUsername = document.getElementById('newUsername').value.trim();
+            const newPassword = document.getElementById('newPassword').value;
+            let users = getUsers();
+
+            if (users.some(u => u.username === newUsername)) {
+                const errorMsg = document.getElementById('registerErrorMsg');
+                errorMsg.textContent = "Username already exists.";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            users.push({username: newUsername, password: newPassword});
+            saveUsers(users);
+
+            alert('Registration successful! You can now log in.');
+            document.getElementById('registerForm').reset();
+            document.getElementById('showLoginBtn').click();
+        });
+    </script>
 </body>
 </html>
