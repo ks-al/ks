@@ -1,38 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tribute to Dr. A.P.J. Abdul Kalam</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>To-Do App</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: url("Screenshot 2025-06-20 063034.png") no-repeat center center fixed;
+      background-size: 100vw 100vh;
+      background-size: cover;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Dr. A.P.J. Abdul Kalam</h1>
-    <p class="subtitle">“Missile Man of India”</p>
-    
-    <img src="Screenshot 2025-06-19 203443.png" alt="Dr. Abdul Kalam" class="main-image"/>
-
-    <section class="bio">
-      <h2>About</h2>
-      <p>Dr. A.P.J. Abdul Kalam was an Indian aerospace scientist and the 11th President of India from 2002 to 2007. He is remembered for his pivotal role in India’s missile and nuclear weapons programs, and for being an inspiring teacher, visionary, and humble leader.</p>
+  <main>
+    <h1>To-Do List</h1>
+    <section class="task-input-section">
+      <input type="text" id="task" placeholder="Enter a new task" aria-label="Task">
+      <div id="options-container"></div>
+      <div class="button-group">
+        <button id="add-btn" type="button">Add Task <span aria-hidden="true">📝</span></button>
+        <button id="show-options-btn" type="button">More Options <span aria-hidden="true">✨</span></button>
+      </div>
     </section>
-
-    <section class="achievements">
-      <h2>Achievements</h2>
-      <ul>
-        <li>Known as the “Missile Man of India”.</li>
-        <li>Played a leading role in India’s 1998 nuclear tests.</li>
-        <li>11th President of India (2002–2007).</li>
-        <li>Awarded Bharat Ratna in 1997.</li>
-        <li>Authored inspirational books like "Wings of Fire".</li>
-        <li>Died while delivering a lecture – a true teacher till the end.</li>
-      </ul>
+    <section>
+      <ul id="pending-list" aria-label="Pending Tasks"></ul>
     </section>
+  </main>
+  <script>
+    // Modern JS for dynamic extra options
+    const optionsContainer = document.getElementById('options-container');
+    const showOptionsBtn = document.getElementById('show-options-btn');
 
-    <footer>
-      <p>Created by Gothalu 💙</p>
-    </footer>
-  </div>
+    showOptionsBtn.addEventListener('click', () => {
+      const optionDiv = document.createElement('div');
+      optionDiv.className = 'extra-options';
+      optionDiv.style.marginBottom = '8px';
+
+      const scheduleInput = document.createElement('input');
+      scheduleInput.type = 'datetime-local';
+      scheduleInput.placeholder = 'Schedule';
+      scheduleInput.setAttribute('aria-label', 'Schedule');
+      scheduleInput.style.marginRight = '8px';
+
+      const placeInput = document.createElement('input');
+      placeInput.type = 'text';
+      placeInput.placeholder = 'Place';
+      placeInput.setAttribute('aria-label', 'Place');
+
+      optionDiv.appendChild(scheduleInput);
+      optionDiv.appendChild(placeInput);
+
+      optionsContainer.appendChild(optionDiv);
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,58 +1,185 @@
+/* For CSS reference: https://developer.mozilla.org/en-US/docs/Web/CSS */
+
 body {
-  background-color: #f0f2f5;
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: #f4f4f4;
   margin: 0;
+  padding: 0;
+  background-image: url("Screenshot 2025-06-20 063034.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.container {
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+h1 {
+  text-align: center;
+  color: #333;
+  margin-top: 30px;
 }
 
-.calculator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+input[type="text"] {
+  width: 60%;
+  padding: 10px;
+  margin: 20px 10px 20px 20%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+/* Cute pastel gradient background for the body */
+body {
+  background: linear-gradient(135deg, #f9d6e9 0%, #d6e6fa 100%);
 }
 
-#display {
-  width: 250px;
-  height: 50px;
-  font-size: 24px;
-  margin-bottom: 15px;
-  text-align: right;
-  padding-right: 10px;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 60px);
-  grid-template-rows: repeat(5, 60px);
-  gap: 10px;
-}
-
-button {
+/* Style the delete button as an "X" icon */
+ul#pending-list li button {
+  background: transparent;
+  color: #dc3545;
+  padding: 6px 12px;
   font-size: 20px;
+  border-radius: 50%;
   border: none;
-  border-radius: 10px;
-  background-color: #007bff;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition:0.2s, color 0.2s;
+  font-weight: bold;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ul#pending-list li button:hover {
+  background: #ffe6e6;
+  color: #fff;
+  background-color: #dc3545;
+}
+
+/* Add more options: Edit and Complete buttons */
+ul#pending-list li .edit-btn {
+  background: transparent;
+  color: #007bff;
+  border: none;
+  font-size: 18px;
+  margin-right: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:0.2s, color 0.2s;
+}
+
+ul#pending-list li .edit-btn:hover {
+  background: #e6f0ff;
+  color: #fff;
+  background-color: #007bff;
+}
+
+ul#pending-list li .complete-btn {
+  background: transparent;
+  color: #28a745;
+  border: none;
+  font-size: 18px;
+  margin-right: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:0.2s, color 0.2s;
+}
+
+ul#pending-list li .complete-btn:hover {
+  background: #e6ffe6;
+  color: #fff;
+  background-color: #28a745;
+}
+button {
+  padding: 10px 18px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background: #003d80;
 }
 
-/* Make 0 button double width */
-button[style*="grid-column"] {
-  grid-column: span 2
+ul#pending-list {
+  width: 60%;
+  margin: 0 auto 30px auto;
+  padding: 0;
+  list-style: none;
+}
+
+ul#pending-list li {
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 12px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+ul#pending-list li input[type="checkbox"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+}
+
+ul#pending-list li span {
+  flex: 1;
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+ul#pending-list li button {
+  background: #dc35c3;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+ul#pending-list li button:hover {
+  background: #a7321d;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Style for the extra options container */
+.extra-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Optional: Style for emoji labels */
+.extra-options label {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  margin-right: 16px;
+}
+
+/* Optional: Style for the inputs inside extra options */
+.extra-options input[type="datetime-local"],
+.extra-options input[type="text"] {
+  margin-right: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
